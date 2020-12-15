@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  # BASE CONFIG OF DATABASE - TABLE SETUP
+  base-db: &setup
+    build:
+      context: database_setup
+      args:
+        setup_file: setup.sql
+
+  # DATABASE LOCAL DEVELOPMENT SETUP
+  db:
+    <<: *setup
+    container_name: db_backend
+    env_file:
+      - "database_setup/db.env"
+    ports:
+    - "3306:3306"
+    networks:
+      - backend
+
+  # API SETUP FOR PRODUCTION
+  api:
+    container_name: api_backend
+    build:
+      context: .
+      dockerfile: api_setup/Dockerfile
+    depends_on:
+      - db
+    working_dir: /api
+    ports:
+      - "8000:8000"
+    command: uwsgi --ini uwsgi.ini
+    networks:
+      - backend
+networks:
+  backend:
