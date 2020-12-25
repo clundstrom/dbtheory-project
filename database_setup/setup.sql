@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `publishable` (
     `created` int(20) DEFAULT NULL,
     `dateString` varchar(30) DEFAULT NULL,
     `title` varchar(50) DEFAULT NULL,
-    `message` longtext DEFAULT NULL,
+    `body` longtext DEFAULT NULL,
     `imageURL` varchar(100) DEFAULT NULL,
     `hidden` boolean,
     PRIMARY KEY (`id`)
@@ -73,13 +73,14 @@ CREATE TABLE IF NOT EXISTS `courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `projects` (
-    `id` int(10) NOT NULL AUTO_INCREMENT,
     `tags` varchar(50) DEFAULT NULL,
     `srcURL` varchar(255) DEFAULT NULL,
     `fullPageImageUrl` varchar(255) DEFAULT NULL,
     `description` varchar(100) DEFAULT NULL,
     `fk_parent_id` int(10) DEFAULT NULL,
-    PRIMARY KEY (`id`)
+    FOREIGN KEY (`fk_parent_id`)
+        REFERENCES `publishable`(`id`)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 # Insert some default userlevels
