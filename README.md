@@ -18,6 +18,7 @@ MYSQL_USER=dbtheory
 MYSQL_PASSWORD=thisisapassword
 MYSQL_ROOT_PASSWORD=thisisarootpassword
 MYSQL_DATABASE=general
+MYSQL_PORT=3306
 ```
 
 **/api_setup/api.env**
@@ -28,6 +29,7 @@ MYSQL_USER=dbtheory
 MYSQL_PASSWORD=thisisapassword
 MYSQL_ROOT_PASSWORD=thisisarootpassword
 MYSQL_DATABASE=general
+MYSQL_PORT=3306
 
 # MISC
 RUN_IN_CONTAINER=1

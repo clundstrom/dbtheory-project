@@ -156,7 +156,7 @@ INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`
 INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`) VALUES('Software engineering introduction and project', 7.5, NULL,NULL,False,True, False);
 INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`) VALUES('Software for Embedded Systems', 7.5, NULL,NULL,False,True, False);
 INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`) VALUES('Software Technology', 7.5, NULL,NULL,False,True, False);
-INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`) VALUES('Software technology - Degree project', 7.5, NULL,NULL,False,False, False);
+INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`) VALUES('Software technology - Degree project', 15, NULL,NULL,False,False, False);
 
 
 # Creating view for basic user information to encapsulate sensitive data
