@@ -9,6 +9,7 @@ import uuid
 open_routes = Blueprint('open_routes', __name__)
 DEFAULT_PERMISSION = 1
 
+
 @open_routes.route("/test", methods=['GET'])
 def test():
     return make_response(status_custom("Connection OK"), 200)
@@ -40,14 +41,13 @@ def get_abort():
 
 @open_routes.route("/community", methods=['GET'])
 def get_communities():
-
     if request.args.get('area'):
         query = sql('GET_COMMUNITY_BY_AREA')
         res = conn.execute(query, request.args.get('area'))
 
     elif request.args.get('name'):
         query = sql('GET_COMMUNITY_BY_NAME')
-        likeStr = "%" + request.args.get('name') +"%"
+        likeStr = "%" + request.args.get('name') + "%"
         res = conn.execute(query, likeStr)
 
     else:
@@ -91,6 +91,14 @@ def register():
 def login():
     """
     Handles login of a user and returns a session_token if supplied password and username is correct.
+    Session_token and Username needs to be supplied with every request in order to access member only routes.
+
+    Eg.
+
+    {
+    "username": "Chris",
+    "token": "0e45b5df2e6c42ae9b69f1a2a2470209"
+    }
     """
 
     data = request.json
