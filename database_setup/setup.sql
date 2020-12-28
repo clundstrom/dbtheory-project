@@ -4,8 +4,8 @@ USE general;
 
 CREATE TABLE IF NOT EXISTS `userlevel` (
     `id` int(10) NOT NULL AUTO_INCREMENT,
-    `type` varchar(50) DEFAULT NULL,
-    `permissions` varchar(128) DEFAULT NULL,
+    `type` varchar(50) NOT NULL,
+    `permissions` varchar(128) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -52,11 +52,11 @@ CREATE TABLE IF NOT EXISTS `publishable` (
     `author` varchar(50) DEFAULT NULL,
     `created` int(20) NOT NULL,
     `dateString` varchar(30) DEFAULT NULL,
-    `title` varchar(50) DEFAULT NULL,
+    `title` varchar(50) NOT NULL,
     `body` longtext DEFAULT NULL,
     `imageURL` varchar(255) DEFAULT NULL,
-    `hidden` boolean,
-    `fk_author_id` int(20),
+    `hidden` boolean NOT NULL,
+    `fk_author_id` int(20) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY(`fk_author_id`)
         REFERENCES `users`(`id`)
@@ -64,13 +64,13 @@ CREATE TABLE IF NOT EXISTS `publishable` (
 
 CREATE TABLE IF NOT EXISTS `courses` (
     `id` int(10) NOT NULL AUTO_INCREMENT,
-    `name` varchar(50) DEFAULT NULL,
+    `name` varchar(50) NOT NULL,
     `points` float(10) NOT NULL,
     `start` varchar(50) DEFAULT NULL,
     `end` varchar(50) DEFAULT NULL,
-    `active` boolean DEFAULT NULL,
-    `completed` boolean DEFAULT NULL,
-    `next` boolean DEFAULT NULL,
+    `active` boolean NOT NULL,
+    `completed` boolean NOT NULL,
+    `next` boolean NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
     `srcURL` varchar(255) DEFAULT NULL,
     `fullPageImageUrl` varchar(255) DEFAULT NULL,
     `description` varchar(100) DEFAULT NULL,
-    `fk_parent_id` int(10) DEFAULT NULL,
+    `fk_parent_id` int(10) NOT NULL,
     FOREIGN KEY (`fk_parent_id`)
         REFERENCES `publishable`(`id`)
         ON DELETE CASCADE
@@ -113,8 +113,6 @@ INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, bod
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609111225,"","Draft1", "Hidden draft1", NULL, True);
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609110225,"","Draft2", "Hidden draft2", NULL, True);
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Chris alias", 1,1609109225,"","Draft3", "Hidden draft3", NULL, True);
-
-#docker-compose down && docker-compose build db && docker-compose up -d db
 
 # Insert some default test projects
 INSERT INTO `projects` (`tags`, `srcURL`, `fullPageImageUrl`,`description`,`fk_parent_id`)
