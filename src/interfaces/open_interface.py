@@ -29,7 +29,7 @@ def sql(request_type, *args):
         WHERE type = %s
         """
     elif request_type == 'POST_REGISTER_USER':
-        query = """INSERT INTO `users` (name, hash) VALUES(%s, %s)"""
+        query = """INSERT INTO `users` (name, hash, fk_userlevel_id) VALUES(%s, %s, %s)"""
 
     elif request_type == 'POST_UPDATE_TOKEN':
         query = """UPDATE `users` SET token = (%s) WHERE id = (%s)"""
@@ -50,5 +50,17 @@ def sql(request_type, *args):
 
     elif request_type == 'GET_ALL_COMMUNITIES':
         query = """SELECT * FROM community"""
+
+    # COURSES
+    elif request_type == 'GET_ALL_COURSES':
+        query = """SELECT name, points, completed FROM courses"""
+
+    elif request_type == 'GET_COMPLETED_COURSES':
+        query = """
+        SELECT name, points FROM courses
+        WHERE completed = %s
+        """
+
+
 
     return query

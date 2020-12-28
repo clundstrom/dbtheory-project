@@ -7,7 +7,7 @@ from auth import auth
 import uuid
 
 open_routes = Blueprint('open_routes', __name__)
-
+DEFAULT_PERMISSION = 1
 
 @open_routes.route("/test", methods=['GET'])
 def test():
@@ -59,6 +59,15 @@ def get_communities():
 
 @open_routes.route("/register", methods=['POST'])
 def register():
+    """
+    Handles registration of users. Works by supplying a json object in the POST request body.
+    Example:
+
+    {
+    "username": "Chris",
+    "password": "secretpassword"
+    }
+    """
     data = request.json
     if data.get('username') and data.get('password'):
         query = sql('GET_USER_BY_NAME', data.get('username'))
@@ -67,7 +76,7 @@ def register():
         if len(res.json) != 1:
             hash = auth.hash_password(password=data.get('password'))
             query = sql('POST_REGISTER_USER', data.get('username'), hash)
-            conn.execute(query, data.get('username'), hash)
+            conn.execute(query, data.get('username'), hash, DEFAULT_PERMISSION)
             user = {
                 "username": data.get('username'),
                 "password": data.get('password')
@@ -75,14 +84,16 @@ def register():
             return login(user)
     else:
         return abort(400)
-    return make_response(status_custom("Registration successful"), 200)
+    return make_response(status_custom("Username taken"), 400)
 
 
-def login(param):
-    if param:
-        data = param
-    else:
-        data = request.json
+@open_routes.route("/login", methods=['POST'])
+def login():
+    """
+    Handles login of a user and returns a session_token if supplied password and username is correct.
+    """
+
+    data = request.json
 
     if data.get('username') and data.get('password'):
         query = sql('GET_USER_BY_NAME', data.get('username'))
@@ -100,5 +111,5 @@ def login(param):
             return make_response(user, 200)
 
         else:
-            return make_response(status_code(200), 200)
+            return make_response(status_code(403), 403)
     return abort(400)
