@@ -91,10 +91,9 @@ def register():
 def login():
     """
     Handles login of a user and returns a session_token if supplied password and username is correct.
-    Session_token and Username needs to be supplied with every request in order to access member only routes.
+    Token and Username needs to be supplied with every request in order to access restricted routes.
 
-    Eg.
-
+    Example:
     {
     "username": "Chris",
     "token": "0e45b5df2e6c42ae9b69f1a2a2470209"
