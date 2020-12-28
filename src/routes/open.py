@@ -111,11 +111,11 @@ def login():
         if not user:
             return make_response(status_custom("No such user"), 200)
         user = user[0]
-        if auth.is_valid_login(data.get('password'), user[2]):
+        if auth.is_valid_login(data.get('password'), user.get('hash')):
             token = uuid.uuid4().hex
             query = sql('POST_UPDATE_TOKEN')
-            conn.execute(query, token, user[0])
-            user = {"username": user[1],
+            conn.execute(query, token, user.get('id'))
+            user = {"username": user.get('name'),
                     "token": token
                     }
             return make_response(user, 200)
