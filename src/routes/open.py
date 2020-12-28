@@ -1,4 +1,4 @@
-from flask import Blueprint, request, make_response, abort
+from flask import Blueprint, request, make_response, abort, jsonify
 from auth.auth import authenticate
 from models.http import status_code, status_custom
 from auth import connect as conn
@@ -19,6 +19,13 @@ def test():
 @authenticate
 def test_auth():
     return make_response(status_custom("Authorized"), 200)
+
+@open_routes.route("/courses", methods=['GET'])
+def courses():
+    query = sql("GET_ALL_COURSES")
+    res = conn.execute(query)
+
+    return make_response(res, 200)
 
 
 @open_routes.route("/get_user/", methods=['GET'])

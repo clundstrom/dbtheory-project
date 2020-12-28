@@ -28,7 +28,15 @@ def execute(query, *args):
             conn.commit()
 
         rv = cur.fetchall()
-        return jsonify(rv)
+        json_data = []
+
+        if rv:
+            row_headers = [x[0] for x in cur.description]
+
+            for result in rv:
+                json_data.append(dict(zip(row_headers, result)))
+
+        return jsonify(json_data)
 
     except db.Error as e:
         print(f"Error: {e}")
