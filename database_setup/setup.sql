@@ -101,10 +101,18 @@ INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Tomas
 INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Christoffers bostadsrättsförening", "Stockholm", 1);
 INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Labans bostadsrättsförening", "Kalmar", 2);
 INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Bobs bostadsrättsförening", "Göteborg",3);
-INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Kalles bostadsrättsförening", "Jönköping", 4);
 
 # Insert some default test products
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest slagborrmachine on the market", 1, true, 1);
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest hammerdrill on the market", 1, true, 1);
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, false, 1);
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Air compressor", "MAX 5 bar", 1, true, 1);
+
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest slagborrmachine on the market", 1, true, 2);
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, true, 2);
+
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Pressure washer", NULL, 2, false, 3);
+INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Gardening tools", NULL, 1, true, 3);
+
 
 # Insert some default test publishable
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Chris alias", 1, 1609148784,NULL,"Dimensionality Reduction", "The plot describes the amount of volume needed to cover r amount of samples in different dimensions. By increasing dimensions the volume needed to cover the initial 20% becomes 45% for 2D, 80% for 7D and so on.", "https://firebasestorage.googleapis.com/v0/b/portfolio-416e3.appspot.com/o/thumbnails%2Fswiss_roll.png?alt=media&token=74d84918-6ac9-4507-9efa-75d372868531", False);
