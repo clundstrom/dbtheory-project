@@ -113,7 +113,9 @@ INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, bod
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609111225,"","Draft1", "Hidden draft1", NULL, True);
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609110225,"","Draft2", "Hidden draft2", NULL, True);
 INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Chris alias", 1,1609109225,"","Draft3", "Hidden draft3", NULL, True);
+
 #docker-compose down && docker-compose build db && docker-compose up -d db
+
 # Insert some default test projects
 INSERT INTO `projects` (`tags`, `srcURL`, `fullPageImageUrl`,`description`,`fk_parent_id`)
 VALUES('["Flask", "Python", "Memes", "Learning"]',
