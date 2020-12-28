@@ -57,10 +57,8 @@ def sql(request_type, *args):
 
     elif request_type == 'GET_COMPLETED_COURSES':
         query = """
-        SELECT name, points FROM courses
+        SELECT name, points, completed FROM courses
         WHERE completed = %s
         """
-
-
 
     return query
