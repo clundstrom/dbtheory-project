@@ -77,11 +77,7 @@ def register():
             hash = auth.hash_password(password=data.get('password'))
             query = sql('POST_REGISTER_USER', data.get('username'), hash)
             conn.execute(query, data.get('username'), hash, DEFAULT_PERMISSION)
-            user = {
-                "username": data.get('username'),
-                "password": data.get('password')
-            }
-            return login(user)
+            return make_response(status_custom("Registration successful"), 200)
     else:
         return abort(400)
     return make_response(status_custom("Username taken"), 400)
