@@ -27,8 +27,8 @@ def validate(request):
             query = sql('GET_USER_BY_NAME')
             res = conn.execute(query, (request['username'],))
             if res.json:
-                token = res.json[0][5]
-                if token == request['token']:
+                token = res.json[0].get('token')
+                if token == request.get('token'):
                     return True
     return False
 

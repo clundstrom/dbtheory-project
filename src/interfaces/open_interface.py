@@ -10,10 +10,10 @@ def sql(request_type, *args):
         query = """ SELECT * FROM Users_Public"""
 
     elif request_type == 'GET_USER_BY_ID':
-        query = """SELECT * FROM users where id = %s"""
+        query = """SELECT * FROM users WHERE id = %s"""
 
     elif request_type == 'GET_USER_BY_NAME':
-        query = """SELECT * FROM users where name = %s"""
+        query = """SELECT * FROM users WHERE name = %s"""
 
     elif request_type == 'GET_USER_PERMISSIONS':
         query = """
@@ -41,12 +41,18 @@ def sql(request_type, *args):
             WHERE id = (%s)
             """
 
+    elif request_type == 'DELETE_USER':
+        query = """
+            DELETE FROM users
+            WHERE users.id = %s
+            """
+
     # COMMUNITY RELATED QUERIES
     elif request_type == 'GET_COMMUNITY_BY_NAME':
-        query = """SELECT * FROM community where name like %s"""
+        query = """SELECT * FROM community WHERE name like %s"""
 
     elif request_type == 'GET_COMMUNITY_BY_AREA':
-        query = """SELECT * FROM community where area like %s"""
+        query = """SELECT * FROM community WHERE area like %s"""
 
     elif request_type == 'GET_ALL_COMMUNITIES':
         query = """SELECT * FROM community"""
@@ -60,5 +66,21 @@ def sql(request_type, *args):
         SELECT name, points, completed FROM courses
         WHERE completed = %s
         """
+    elif request_type == 'GET_SUM_COURSES':
+        query = """
+           SELECT sum(points) as total_points FROM courses
+           WHERE completed=%s
+           """
+
+    # PUBLISHABLE RELATED QUERIES
+
+    # Add
+
+    # Update
+
+    # Delete
+
+
+
 
     return query

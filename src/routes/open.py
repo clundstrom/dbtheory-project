@@ -24,7 +24,11 @@ def test_auth():
 @open_routes.route("/courses", methods=['GET'])
 def courses():
 
-    if request.args.get('completed'):
+    if request.args.get('completed') and request.args.get('sum') == '1':
+        query = sql('GET_SUM_COURSES')
+        res = conn.execute(query, request.args.get('completed'))
+
+    elif request.args.get('completed'):
         query = sql('GET_COMPLETED_COURSES')
         res = conn.execute(query, request.args.get('completed'))
 
@@ -35,26 +39,27 @@ def courses():
     return make_response(res, 200)
 
 
-@open_routes.route("/get_user/", methods=['GET'])
-def get_user():
-    if request.args.get('id'):
-        id = request.args.get('id')
-        query = sql('GET_USER_BY_ID', request.args.get('id'))
-        res = conn.execute(query, id)
-    else:
-        query = sql(request_type='GET_ALL_USERS')
-        res = conn.execute(query)
-
+@open_routes.route("/user", methods=['GET', 'DELETE'])
+def user():
+    if request.method == 'GET':
+        if request.args.get('id'):
+            query = sql('GET_USER_BY_ID', request.args.get('id'))
+            res = conn.execute(query, request.args.get('id'))
+        else:
+            query = sql(request_type='GET_ALL_USERS')
+            res = conn.execute(query)
+    elif request.method == 'DELETE':
+        if request.args.get('id'):
+            query = sql('DELETE_USER', request.args.get('id'))
+            conn.execute(query, request.args.get('id'))
+            return make_response(status_custom("User deleted"), 200)
+        else:
+            return make_response(status_code(400), 400)
     return make_response(res, 200)
 
 
-@open_routes.route("/abort", methods=['GET'])
-def get_abort():
-    return abort(404)
-
-
 @open_routes.route("/community", methods=['GET'])
-def get_communities():
+def communities():
     if request.args.get('area'):
         query = sql('GET_COMMUNITY_BY_AREA')
         res = conn.execute(query, request.args.get('area'))
