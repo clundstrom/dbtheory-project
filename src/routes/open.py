@@ -4,7 +4,7 @@ from models.http import status_code, status_custom
 from auth import connect as conn
 from interfaces.open_interface import sql
 from auth import auth
-import uuid
+import secrets
 
 open_routes = Blueprint('open_routes', __name__)
 DEFAULT_PERMISSION = 1
@@ -119,7 +119,7 @@ def login():
             return make_response(status_custom("No such user"), 200)
         user = user[0]
         if auth.is_valid_login(data.get('password'), user.get('hash')):
-            token = uuid.uuid4().hex
+            token = secrets.token_urlsafe(64)
             query = sql('POST_UPDATE_TOKEN')
             conn.execute(query, token, user.get('id'))
             user = {"username": user.get('name'),
