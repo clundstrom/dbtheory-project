@@ -161,12 +161,19 @@ def publishable():
         return make_response(res, 200)
     elif request.args.get('start') and request.args.get('end'):
         query = sql('GET_POSTS_BY_DATE')
-        res = conn.execute(query, request.args.get('start'),  request.args.get('end'))
+        res = conn.execute(query, request.args.get('start'), request.args.get('end'))
         return make_response(res, 200)
     else:
         query = sql('GET_ALL_POSTS')
         res = conn.execute(query)
         return make_response(res, 200)
+
+
+@open_routes.route("/top_posters", methods=['GET'])
+def top():
+    query = sql('GET_TOP_POSTERS')
+    res = conn.execute(query)
+    return make_response(res, 200)
 
 
 @open_routes.route("/project", methods=['GET'])

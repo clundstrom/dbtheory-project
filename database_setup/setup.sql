@@ -166,4 +166,4 @@ INSERT INTO `courses` (`name`,`points`,`start`,`end`,`active`,`completed`,`next`
 
 
 # Creating view for basic user information to encapsulate sensitive data
-CREATE VIEW Users_Public AS SELECT name, fk_userlevel_id, fk_community_ids from users
+CREATE VIEW Users_Public AS SELECT name, fk_userlevel_id, fk_community_ids, type, permissions FROM users INNER JOIN userlevel u ON users.fk_userlevel_id = u.id

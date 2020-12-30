@@ -15,12 +15,6 @@ def sql(request_type, *args):
     elif request_type == 'GET_USER_BY_NAME':
         query = """SELECT * FROM users WHERE name = %s"""
 
-    elif request_type == 'GET_USER_PERMISSIONS':
-        query = """
-        SELECT name, type, permissions FROM users
-        INNER JOIN userlevel ON users.fk_userlevel_id = userlevel.id
-        """
-
     elif request_type == 'GET_USER_BY_TYPE':
         query = """
         SELECT name, type
@@ -78,14 +72,14 @@ def sql(request_type, *args):
         query = """
            SELECT name, address, phone_number FROM projects
            INNER JOIN publishable on projects.fk_parent_id = publishable.id
-           INNER JOIN users on users.id = publishable.fk_author_id 
+           INNER JOIN users on users.id = publishable.fk_author_id
+           
            """
 
     elif request_type == 'GET_PUBLISHABLE_AUTHOR':
         query = """
-           SELECT name, address, phone_number FROM projects
-           INNER JOIN publishable on projects.fk_parent_id = publishable.id
-           INNER JOIN users on users.id = publishable.fk_author_id 
+           SELECT name, address, phone_number FROM publishable
+           INNER JOIN users on users.id = publishable.fk_author_id
            """
 
     elif request_type == 'GET_TOP_POSTERS':
@@ -93,6 +87,7 @@ def sql(request_type, *args):
                SELECT author, name, address, phone_number, count(users.id) as nr_posts from publishable
                INNER JOIN users on users.id = publishable.fk_author_id
                GROUP BY users.id
+               ORDER BY nr_posts DESC
                """
     elif request_type == 'GET_ALL_POSTS':
         query = """
