@@ -12,18 +12,27 @@ DEFAULT_PERMISSION = 1
 
 @open_routes.route("/test", methods=['GET'])
 def test():
+    """
+    Used to test API connection.
+    """
     return make_response(status_custom("Connection OK"), 200)
 
 
 @open_routes.route("/test_auth", methods=['GET'])
 @authenticate
 def test_auth():
+    """
+    Tests that a user is authenticated.
+    """
     return make_response(status_custom("Authorized"), 200)
 
 
 @open_routes.route("/courses", methods=['GET'])
 def courses():
-
+    """
+    Returns information on courses. Can be filtered with queryparams
+    'completed' and 'sum'
+    """
     if request.args.get('completed') and request.args.get('sum') == '1':
         query = sql('GET_SUM_COURSES')
         res = conn.execute(query, request.args.get('completed'))
@@ -41,6 +50,10 @@ def courses():
 
 @open_routes.route("/user", methods=['GET', 'DELETE'])
 def user():
+    """
+    Handles crud operations on a user.
+    Can be used to fetch all users, user by id and delete user by id
+    """
     if request.method == 'GET':
         if request.args.get('id'):
             query = sql('GET_USER_BY_ID', request.args.get('id'))
@@ -60,6 +73,9 @@ def user():
 
 @open_routes.route("/community", methods=['GET'])
 def communities():
+    """
+    Returns communities based on area or wildcard name.
+    """
     if request.args.get('area'):
         query = sql('GET_COMMUNITY_BY_AREA')
         res = conn.execute(query, request.args.get('area'))
@@ -135,3 +151,24 @@ def login():
         else:
             return make_response(status_code(403), 403)
     return abort(400)
+
+
+@open_routes.route("/publishable", methods=['GET'])
+def publishable():
+    if request.args.get('hidden'):
+        query = sql('GET_POSTS_HIDDEN')
+        res = conn.execute(query, request.args.get('hidden'))
+        return make_response(res, 200)
+    elif request.args.get('start') and request.args.get('end'):
+        query = sql('GET_POSTS_BY_DATE')
+        res = conn.execute(query, request.args.get('start'),  request.args.get('end'))
+        return make_response(res, 200)
+    else:
+        query = sql('GET_ALL_POSTS')
+        res = conn.execute(query)
+        return make_response(res, 200)
+
+
+@open_routes.route("/project", methods=['GET'])
+def project():
+    pass

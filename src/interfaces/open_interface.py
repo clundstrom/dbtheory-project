@@ -72,8 +72,42 @@ def sql(request_type, *args):
            WHERE completed=%s
            """
 
-    # PUBLISHABLE RELATED QUERIES
+    # PUBLISHABLE & PROJECT RELATED QUERIES
 
+    elif request_type == 'GET_PROJECT_AUTHOR':
+        query = """
+           SELECT name, address, phone_number FROM projects
+           INNER JOIN publishable on projects.fk_parent_id = publishable.id
+           INNER JOIN users on users.id = publishable.fk_author_id 
+           """
+
+    elif request_type == 'GET_PUBLISHABLE_AUTHOR':
+        query = """
+           SELECT name, address, phone_number FROM projects
+           INNER JOIN publishable on projects.fk_parent_id = publishable.id
+           INNER JOIN users on users.id = publishable.fk_author_id 
+           """
+
+    elif request_type == 'GET_TOP_POSTERS':
+        query = """
+               SELECT author, name, address, phone_number, count(users.id) as nr_posts from publishable
+               INNER JOIN users on users.id = publishable.fk_author_id
+               GROUP BY users.id
+               """
+    elif request_type == 'GET_ALL_POSTS':
+        query = """
+               SELECT * FROM publishable
+               """
+    elif request_type == 'GET_POSTS_HIDDEN':
+        query = """
+               SELECT * FROM publishable
+               WHERE hidden = %s
+               """
+    elif request_type == 'GET_POSTS_BY_DATE':
+        query = """
+               SELECT *, from_unixtime(created) as timestamp from publishable
+               where unix_timestamp(%s) < created AND unix_timestamp(%s) >= created
+               """
     # Add
 
     # Update
