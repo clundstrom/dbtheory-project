@@ -73,7 +73,6 @@ def sql(request_type, *args):
            SELECT name, address, phone_number FROM projects
            INNER JOIN publishable on projects.fk_parent_id = publishable.id
            INNER JOIN users on users.id = publishable.fk_author_id
-           
            """
 
     elif request_type == 'GET_PUBLISHABLE_AUTHOR':
@@ -103,13 +102,30 @@ def sql(request_type, *args):
                SELECT *, from_unixtime(created) as timestamp from publishable
                where unix_timestamp(%s) < created AND unix_timestamp(%s) >= created
                """
-    # Add
+    elif request_type == 'GET_ALL_PUBLISHABLE_PROJECTS':
+        query = """
+        SELECT * FROM publishable
+        LEFT JOIN projects on publishable.id = projects.fk_parent_id
+        INNER JOIN users on users.id = publishable.author_id
+        """
+    elif request_type == 'GET_ALL_PUBLISHABLE_PROJECTS_COUNT':
+        query = """
+        SELECT name, count(users.id) as count FROM publishable
+        LEFT JOIN projects on publishable.id = projects.fk_parent_id
+        INNER JOIN users on users.id = publishable.fk_author_id
+        GROUP BY users.id 
+        ORDER BY count desc
+        """
+    elif request_type == 'GET_POSTS_OVER_X_CHARS':
+        query = """
+            SELECT * FROM publishable 
+            WHERE publishable.id 
+            IN (SELECT * FROM publishable 
+            WHERE LENGTH (body) > %s)
+            """
 
     # Update
 
     # Delete
-
-
-
 
     return query
