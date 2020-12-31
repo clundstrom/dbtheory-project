@@ -5,7 +5,9 @@ def sql(request_type, *args):
 
     query = ''
 
+    ######################
     # USER RELATED QUERIES
+    ######################
     if request_type == 'GET_ALL_USERS':
         query = """ SELECT * FROM Users_Public"""
 
@@ -34,14 +36,15 @@ def sql(request_type, *args):
             SET hash = (%s), address = (%s), phone_number = (%s), fk_community_ids = (%s) 
             WHERE id = (%s)
             """
-
     elif request_type == 'DELETE_USER':
         query = """
             DELETE FROM users
             WHERE users.id = %s
             """
 
+    ###########################
     # COMMUNITY RELATED QUERIES
+    ###########################
     elif request_type == 'GET_COMMUNITY_BY_NAME':
         query = """SELECT * FROM community WHERE name like %s"""
 
@@ -51,7 +54,9 @@ def sql(request_type, *args):
     elif request_type == 'GET_ALL_COMMUNITIES':
         query = """SELECT * FROM community"""
 
+    ###########################
     # COURSES
+    ###########################
     elif request_type == 'GET_ALL_COURSES':
         query = """SELECT name, points, completed FROM courses"""
 
@@ -65,9 +70,9 @@ def sql(request_type, *args):
            SELECT sum(points) as total_points FROM courses
            WHERE completed=%s
            """
-
+    ########################################
     # PUBLISHABLE & PROJECT RELATED QUERIES
-
+    #######################################
     elif request_type == 'GET_PROJECT_AUTHOR':
         query = """
            SELECT name, address, phone_number FROM projects
@@ -119,13 +124,9 @@ def sql(request_type, *args):
     elif request_type == 'GET_POSTS_OVER_X_CHARS':
         query = """
             SELECT * FROM publishable 
-            WHERE publishable.id 
-            IN (SELECT * FROM publishable 
+            WHERE publishable.id IN
+            (SELECT publishable.id FROM publishable 
             WHERE LENGTH (body) > %s)
             """
-
-    # Update
-
-    # Delete
 
     return query

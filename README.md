@@ -2,7 +2,15 @@
 
 This is the final project for the course 2DV513 at Linnaeus University winter 2020.
 
-[Description here]
+This project means to provide an API and Database backend for a personal website. 
+When testing the application I recommend running it in Docker. Two simple commands will get everything up and running.
+Use the following one liner from the directory for a quick start (omit -d if you don't want to run it in detached mode).
+
+The API will be reachable on http://localhost:8000/api/v1 when deployed.
+
+``
+docker-compose build db api && docker-compose up -d db api
+``
 
 
 
