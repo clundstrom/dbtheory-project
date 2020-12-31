@@ -6,12 +6,17 @@ This project means to provide an API and Database backend for a personal website
 When testing the application I recommend running it in Docker. Two simple commands will get everything up and running.
 Use the following one liner from the directory for a quick start (omit -d if you don't want to run it in detached mode).
 
-The API will be reachable on http://localhost:8000/api/v1 when deployed.
+To verify that the API is up and running it should be available at http://localhost:8000/api/v1/test when deployed.
 
 ``
 docker-compose build db api && docker-compose up -d db api
 ``
 
+### Structure
+
+* Database setup and constraints is found under **database_setup/setup.sql**
+* Database Queries/Interface is found under **src/interfaces/open_interface.py**
+* API endpoints is found under **src/routes/open.py**
 
 
 ### Container environment
