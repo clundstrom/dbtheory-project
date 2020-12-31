@@ -4,13 +4,13 @@ This is the final project for the course 2DV513 at Linnaeus University winter 20
 
 This project means to provide an API and Database backend for a personal website. 
 When testing the application I recommend running it in Docker. Two simple commands will get everything up and running.
-Use the following one liner from the directory for a quick start (omit -d if you don't want to run it in detached mode).
-
-To verify that the API is up and running it should be available at http://localhost:8000/api/v1/test when deployed.
+Use the following one liner from the directory for a quick start (omit -d if you don't want to run containers in detached mode).
 
 ``
 docker-compose build db api && docker-compose up -d db api
 ``
+
+To verify that the API is up and running it should be available at [http://localhost:8000/api/v1/test]() when deployed.
 
 ### Structure
 
