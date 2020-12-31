@@ -95,6 +95,7 @@ INSERT INTO `userlevel` (`type`, `permissions`) VALUES ('Guest', 3);
 INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Christoffer Lundström",1, "[1,2]");
 INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Jane Austin", 2,"[1,2]");
 INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Bob Barker",3,"[3]");
+INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Brent Barker",3,"[3]");
 INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Tomas the tank engine", 4,"[]");
 
 # Insert some default test communities

@@ -15,7 +15,7 @@ def sql(request_type, *args):
         query = """SELECT * FROM users WHERE id = %s"""
 
     elif request_type == 'GET_USER_BY_NAME':
-        query = """SELECT * FROM users WHERE name = %s"""
+        query = """SELECT * FROM users WHERE name like %s"""
 
     elif request_type == 'GET_USER_BY_TYPE':
         query = """

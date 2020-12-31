@@ -58,6 +58,13 @@ def user():
         if request.args.get('id'):
             query = sql('GET_USER_BY_ID', request.args.get('id'))
             res = conn.execute(query, request.args.get('id'))
+        elif request.args.get('type'):
+            query = sql('GET_USER_BY_TYPE')
+            res = conn.execute(query, request.args.get('type'))
+        elif request.args.get('name'):
+            query = sql('GET_USER_BY_NAME')
+            likeStr = "%" + request.args.get('name') + "%"
+            res = conn.execute(query, likeStr)
         else:
             query = sql(request_type='GET_ALL_USERS')
             res = conn.execute(query)
