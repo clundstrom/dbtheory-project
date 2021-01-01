@@ -179,6 +179,9 @@ def publishable():
 
 @open_routes.route("/top_posters", methods=['GET'])
 def top():
+    """
+    Gets the top blog posters.
+    """
     query = sql('GET_TOP_POSTERS')
     res = conn.execute(query)
     return make_response(res, 200)
@@ -186,6 +189,9 @@ def top():
 
 @open_routes.route("/author", methods=['GET'])
 def author():
+    """
+    Can be used to get the true author behind a specific Post or Project.
+    """
     if request.args.get('project_id'):
         query = sql('GET_PROJECT_AUTHOR')
         res = conn.execute(query, request.args.get('project_id'))
@@ -197,6 +203,9 @@ def author():
 
 @open_routes.route("/projects", methods=['GET'])
 def projects():
+    """
+    Fetches all projects.
+    """
     query = sql('GET_ALL_PROJECTS')
     res = conn.execute(query)
     return make_response(res, 200)
@@ -204,6 +213,10 @@ def projects():
 
 @open_routes.route("/recent", methods=['GET'])
 def recent():
+    """
+    Fetches the most recent Posts or Projects.
+    Can be used with query param LIMIT to limit the search result.
+    """
     if request.args.get('limit'):
         query = sql('GET_ALL_PUBLISHABLE_PROJECTS')
         res = conn.execute(query, try_parse(request.args.get('limit')))
@@ -211,13 +224,6 @@ def recent():
         query = sql('GET_ALL_PUBLISHABLE_PROJECTS')
         res = conn.execute(query, 5)
 
-    return make_response(res, 200)
-
-
-@open_routes.route("/recent/count", methods=['GET'])
-def recent_count():
-    query = sql('GET_ALL_PUBLISHABLE_PROJECTS_COUNT')
-    res = conn.execute(query)
     return make_response(res, 200)
 
 

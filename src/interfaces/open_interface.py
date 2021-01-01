@@ -121,14 +121,6 @@ def sql(request_type, *args):
         ORDER BY publishable.id desc
         LIMIT %s
         """
-    elif request_type == 'GET_ALL_PUBLISHABLE_PROJECTS_COUNT':
-        query = """
-        SELECT author, count(users.id) as count FROM publishable
-        LEFT JOIN projects on publishable.id = projects.fk_parent_id
-        INNER JOIN users on users.id = publishable.fk_author_id
-        GROUP BY users.id 
-        ORDER BY count desc
-        """
     elif request_type == 'GET_POSTS_OVER_X_CHARS':
         query = """
             SELECT * FROM publishable 
