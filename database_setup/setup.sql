@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `community` (
 
 CREATE TABLE IF NOT EXISTS `products` (
     `id` int(10) NOT NULL AUTO_INCREMENT,
-    `name` varchar(50) DEFAULT NULL,
+    `product` varchar(50) DEFAULT NULL,
     `description` varchar(100) DEFAULT NULL,
     `count` int(10),
     `available` boolean,
@@ -49,16 +49,16 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 CREATE TABLE IF NOT EXISTS `publishable` (
     `id` int(10) NOT NULL AUTO_INCREMENT,
-    `author` varchar(50) DEFAULT NULL,
+    `alias` varchar(50) DEFAULT NULL,
     `created` int(20) NOT NULL,
     `dateString` varchar(30) DEFAULT NULL,
     `title` varchar(50) NOT NULL,
     `body` longtext DEFAULT NULL,
     `imageURL` varchar(255) DEFAULT NULL,
     `hidden` boolean NOT NULL,
-    `fk_author_id` int(20) NOT NULL,
+    `fk_alias_id` int(20) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY(`fk_author_id`)
+    FOREIGN KEY(`fk_alias_id`)
         REFERENCES `users`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -100,28 +100,30 @@ INSERT INTO `users` (`name`, `fk_userlevel_id`,`fk_community_ids`) VALUES("Tomas
 
 # Insert some default test communities
 INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Christoffers bostadsrättsförening", "Stockholm", 1);
+INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Mickes BRF", "Stockholm", 4);
 INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Labans bostadsrättsförening", "Kalmar", 2);
 INSERT INTO `community` (`name`, `area`, `fk_owner_id`) VALUES("Bobs bostadsrättsförening", "Göteborg",3);
 
 # Insert some default test products
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest hammerdrill on the market", 1, true, 1);
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, false, 1);
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Air compressor", "MAX 5 bar", 1, true, 1);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest hammerdrill on the market", 1, true, 1);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, false, 1);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Air compressor", "MAX 5 bar", 1, true, 1);
 
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest slagborrmachine on the market", 1, true, 2);
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, true, 2);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Bosch 2k 400W", "Finest slagborrmachine on the market", 1, true, 2);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, true, 2);
 
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Pressure washer", NULL, 2, false, 3);
-INSERT INTO `products` (`name`, `description`, `count`, `available`, `fk_community_id`) VALUES("Gardening tools", NULL, 1, true, 3);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Pressure washer", "A must have for any house owner xD", 2, false, 3);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Gardening tools", "Shovel, rake, scythe? I dno..",3, 1, true, 3);
 
 
 # Insert some default test publishable
-INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Chris alias", 1, 1609148784,NULL,"Dimensionality Reduction", "The plot describes the amount of volume needed to cover r amount of samples in different dimensions. By increasing dimensions the volume needed to cover the initial 20% becomes 45% for 2D, 80% for 7D and so on.", "https://firebasestorage.googleapis.com/v0/b/portfolio-416e3.appspot.com/o/thumbnails%2Fswiss_roll.png?alt=media&token=74d84918-6ac9-4507-9efa-75d372868531", False);
-INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609149225,NULL,"MemeCaption", "A python+flask learning project.", "https://firebasestorage.googleapis.com/v0/b/portfolio-416e3.appspot.com/o/thumbnails%2Fswiss_roll.png?alt=media&token=74d84918-6ac9-4507-9efa-75d372868531", False);
-INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609120225,NULL,"Work on some stuff", "This is a test entry for a blogpost with a NULL imageURL.", NULL, False);
-INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609111225,NULL,"Draft1", "Hidden draft1", NULL, True);
-INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Jane", 2,1609110225,NULL,"Draft2", "Hidden draft2", NULL, True);
-INSERT INTO `publishable` (author, fk_author_id, created, dateString, title, body, imageURL, hidden) VALUES ("Chris alias", 1,1609109225,"","Draft3", "Hidden draft3", NULL, True);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Cyberpunkdude 69", 1, 1609148784,NULL,"Dimensionality Reduction", "The plot describes the amount of volume needed to cover r amount of samples in different dimensions. By increasing dimensions the volume needed to cover the initial 20% becomes 45% for 2D, 80% for 7D and so on.", "https://firebasestorage.googleapis.com/v0/b/portfolio-416e3.appspot.com/o/thumbnails%2Fswiss_roll.png?alt=media&token=74d84918-6ac9-4507-9efa-75d372868531", False);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Secret Jane", 2,1609149225,NULL,"MemeCaption", "A python+flask learning project.", "https://firebasestorage.googleapis.com/v0/b/portfolio-416e3.appspot.com/o/thumbnails%2Fswiss_roll.png?alt=media&token=74d84918-6ac9-4507-9efa-75d372868531", False);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Secret Jane", 2,1609120225,NULL,"Work on some stuff", "This is a test entry for a blogpost with a NULL imageURL.", NULL, False);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Secret Jane", 2,1609111225,NULL,"Draft1", "Hidden draft1", NULL, True);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Secret Jane", 2,1609110225,NULL,"Draft2", "Hidden draft2", NULL, True);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Cyberpunkdude 69", 1,1609109225,"","Draft3", "Hidden draft3", NULL, True);
+INSERT INTO `publishable` (alias, fk_alias_id, created, dateString, title, body, imageURL, hidden) VALUES ("Cyberpunkdude 69", 1,1608409225,"","The intricacies of dank memes", "You might've heard of monkaS, PEPEGA, PEPW or POGG. Today we will dig deep down the meme swamp.. Lorem ipsum Lorem ipsum Lorem ipsum.", NULL, True);
 
 # Insert some default test projects
 INSERT INTO `projects` (`tags`, `srcURL`, `fullPageImageUrl`,`description`,`fk_parent_id`)

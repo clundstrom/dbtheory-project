@@ -99,6 +99,18 @@ def communities():
     return make_response(res, 200)
 
 
+@open_routes.route("/products", methods=['GET'])
+def products():
+    if request.args.get('community'):
+        query = sql('GET_PRODUCTS_BY_COMMUNITY')
+        likeStr = "%" + request.args.get('community') + "%"
+        res = conn.execute(query, likeStr)
+    else:
+        query = sql('GET_ALL_PRODUCTS')
+        res = conn.execute(query)
+    return make_response(res, 200)
+
+
 @open_routes.route("/register", methods=['POST'])
 def register():
     """

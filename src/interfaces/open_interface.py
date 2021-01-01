@@ -55,6 +55,23 @@ def sql(request_type, *args):
         query = """SELECT * FROM community"""
 
     ###########################
+    # PRODUCT RELATED QUERIES
+    ###########################
+
+    elif request_type == 'GET_ALL_PRODUCTS':
+        query = """
+        SELECT p.id, p.product, p.description, p.count, p.available, c.name FROM products p
+        INNER JOIN community c on fk_community_id = c.id
+        """
+    elif request_type == 'GET_PRODUCTS_BY_COMMUNITY':
+        query = """
+        SELECT p.id, p.product, p.description, p.count, p.available, c.name FROM products p
+        INNER JOIN community c on fk_community_id = c.id
+        WHERE c.name like %s
+        """
+
+
+    ###########################
     # COURSES
     ###########################
     elif request_type == 'GET_ALL_COURSES':
@@ -77,27 +94,27 @@ def sql(request_type, *args):
         query = """
            SELECT name, address, phone_number FROM projects
            INNER JOIN publishable on projects.fk_parent_id = publishable.id
-           INNER JOIN users on users.id = publishable.fk_author_id
+           INNER JOIN users on users.id = publishable.fk_alias_id
            WHERE projects.fk_parent_id = %s
            """
 
     elif request_type == 'GET_PUBLISHABLE_AUTHOR':
         query = """
            SELECT name, address, phone_number FROM publishable
-           INNER JOIN users on users.id = publishable.fk_author_id
+           INNER JOIN users on users.id = publishable.fk_alias_id
            WHERE publishable.id = %s
            """
 
     elif request_type == 'GET_TOP_POSTERS':
         query = """
-               SELECT author, name, address, phone_number, count(users.id) as nr_posts from publishable
-               INNER JOIN users on users.id = publishable.fk_author_id
+               SELECT alias, name, address, phone_number, count(users.id) as nr_posts from publishable
+               INNER JOIN users on users.id = publishable.fk_alias_id
                GROUP BY users.id
                ORDER BY nr_posts DESC
                """
     elif request_type == 'GET_ALL_POSTS':
         query = """
-               SELECT id, author, created, dateString, title, body, imageURL, hidden, fk_author_id from publishable
+               SELECT id, alias, created, dateString, title, body, imageURL, hidden, fk_alias_id from publishable
                LEFT JOIN projects ON publishable.id = projects.fk_parent_id
                WHERE projects.fk_parent_id IS NULL
                """
