@@ -165,15 +165,16 @@ def publishable():
     if request.args.get('hidden'):
         query = sql('GET_POSTS_HIDDEN')
         res = conn.execute(query, request.args.get('hidden'))
-        return make_response(res, 200)
     elif request.args.get('start') and request.args.get('end'):
         query = sql('GET_POSTS_BY_DATE')
         res = conn.execute(query, request.args.get('start'), request.args.get('end'))
-        return make_response(res, 200)
+    elif request.args.get('minchars'):
+        query = sql('GET_POSTS_OVER_X_CHARS')
+        res = conn.execute(query, request.args.get('minchars'))
     else:
         query = sql('GET_ALL_POSTS')
         res = conn.execute(query)
-        return make_response(res, 200)
+    return make_response(res, 200)
 
 
 @open_routes.route("/top_posters", methods=['GET'])
@@ -183,6 +184,49 @@ def top():
     return make_response(res, 200)
 
 
-@open_routes.route("/project", methods=['GET'])
-def project():
-    pass
+@open_routes.route("/author", methods=['GET'])
+def author():
+    if request.args.get('project_id'):
+        query = sql('GET_PROJECT_AUTHOR')
+        res = conn.execute(query, request.args.get('project_id'))
+    elif request.args.get('post_id'):
+        query = sql('GET_PUBLISHABLE_AUTHOR')
+        res = conn.execute(query, request.args.get('post_id'))
+    return make_response(res, 200)
+
+
+@open_routes.route("/projects", methods=['GET'])
+def projects():
+    query = sql('GET_ALL_PROJECTS')
+    res = conn.execute(query)
+    return make_response(res, 200)
+
+
+@open_routes.route("/recent", methods=['GET'])
+def recent():
+    if request.args.get('limit'):
+        query = sql('GET_ALL_PUBLISHABLE_PROJECTS')
+        res = conn.execute(query, try_parse(request.args.get('limit')))
+    else:
+        query = sql('GET_ALL_PUBLISHABLE_PROJECTS')
+        res = conn.execute(query, 5)
+
+    return make_response(res, 200)
+
+
+@open_routes.route("/recent/count", methods=['GET'])
+def recent_count():
+    query = sql('GET_ALL_PUBLISHABLE_PROJECTS_COUNT')
+    res = conn.execute(query)
+    return make_response(res, 200)
+
+
+def try_parse(input):
+    """
+    Tries to parse argument to integer.
+    Throws bad request if failed.
+    """
+    try:
+        return int(input)
+    except ValueError:
+        abort(400)

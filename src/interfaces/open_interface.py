@@ -78,12 +78,14 @@ def sql(request_type, *args):
            SELECT name, address, phone_number FROM projects
            INNER JOIN publishable on projects.fk_parent_id = publishable.id
            INNER JOIN users on users.id = publishable.fk_author_id
+           WHERE projects.fk_parent_id = %s
            """
 
     elif request_type == 'GET_PUBLISHABLE_AUTHOR':
         query = """
            SELECT name, address, phone_number FROM publishable
            INNER JOIN users on users.id = publishable.fk_author_id
+           WHERE publishable.id = %s
            """
 
     elif request_type == 'GET_TOP_POSTERS':
@@ -96,6 +98,11 @@ def sql(request_type, *args):
     elif request_type == 'GET_ALL_POSTS':
         query = """
                SELECT * FROM publishable
+               """
+    elif request_type == 'GET_ALL_PROJECTS':
+        query = """
+               SELECT * FROM projects
+               INNER JOIN publishable on publishable.id = projects.fk_parent_id
                """
     elif request_type == 'GET_POSTS_HIDDEN':
         query = """
@@ -111,11 +118,12 @@ def sql(request_type, *args):
         query = """
         SELECT * FROM publishable
         LEFT JOIN projects on publishable.id = projects.fk_parent_id
-        INNER JOIN users on users.id = publishable.author_id
+        ORDER BY publishable.id desc
+        LIMIT %s
         """
     elif request_type == 'GET_ALL_PUBLISHABLE_PROJECTS_COUNT':
         query = """
-        SELECT name, count(users.id) as count FROM publishable
+        SELECT author, count(users.id) as count FROM publishable
         LEFT JOIN projects on publishable.id = projects.fk_parent_id
         INNER JOIN users on users.id = publishable.fk_author_id
         GROUP BY users.id 
