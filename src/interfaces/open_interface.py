@@ -97,7 +97,9 @@ def sql(request_type, *args):
                """
     elif request_type == 'GET_ALL_POSTS':
         query = """
-               SELECT * FROM publishable
+               SELECT id, author, created, dateString, title, body, imageURL, hidden, fk_author_id from publishable
+               LEFT JOIN projects ON publishable.id = projects.fk_parent_id
+               WHERE projects.fk_parent_id IS NULL
                """
     elif request_type == 'GET_ALL_PROJECTS':
         query = """
