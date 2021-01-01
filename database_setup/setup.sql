@@ -113,7 +113,7 @@ INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_comm
 INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Generic Lawnmower", "Finest slagborrmachine on the market", 1, true, 2);
 
 INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Pressure washer", "A must have for any house owner xD", 2, false, 3);
-INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Gardening tools", "Shovel, rake, scythe? I dno..",3, 1, true, 3);
+INSERT INTO `products` (`product`, `description`, `count`, `available`, `fk_community_id`) VALUES("Gardening tools", "Shovel, rake, scythe? I dno..",3, false, 3);
 
 
 # Insert some default test publishable
