@@ -22,7 +22,7 @@ def create_api():
     env.read_env('api_setup/api.env')
 
     # Read settings to connect to DB
-    app.config['MYSQL_HOST'] = 'db' if os.environ.get('RUN_IN_CONTAINER')==1 else os.environ.get('MYSQL_HOST')
+    app.config['MYSQL_HOST'] = 'db' if os.environ.get('RUN_IN_CONTAINER')=='1' else os.environ.get('MYSQL_HOST')
     app.config['MYSQL_DATABASE'] = os.environ.get('MYSQL_DATABASE')
     app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
     app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
