@@ -9,7 +9,7 @@ def sql(request_type, *args):
     # USER RELATED QUERIES
     ######################
     if request_type == 'GET_ALL_USERS':
-        query = """ SELECT * FROM Users_Public"""
+        query = """ SELECT * FROM Users_Public"""  # <--- THIS IS A VIEW
 
     elif request_type == 'GET_USER_BY_ID':
         query = """SELECT * FROM users WHERE id = %s"""

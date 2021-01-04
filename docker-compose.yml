@@ -14,7 +14,7 @@ services:
     container_name: db_backend
     env_file:
       - "database_setup/db.env"
-    ports:
+    expose:
     - "3306:3306"
     networks:
       - backend
