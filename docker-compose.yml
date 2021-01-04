@@ -15,7 +15,7 @@ services:
     env_file:
       - "database_setup/db.env"
     expose:
-    - "3306:3306"
+    - "3306"
     networks:
       - backend
 
